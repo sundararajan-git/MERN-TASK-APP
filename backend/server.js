@@ -20,5 +20,5 @@ mongoose.connect(URI).then(()=>{
 })
 
 
-app.use("/mern-task-api",taskRoutes)
+app.use("/",taskRoutes)
 
