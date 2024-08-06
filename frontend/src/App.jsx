@@ -13,27 +13,23 @@ const App = () => {
   const [tableRow, settableRow] = useState([])
 
   return (
-    <section className='flex items-center flex-col gap-6'>
-      <div className='bg-white w-3/4 rounded-lg shadow'>
+    <section className='flex items-center flex-col gap-6 m-2 h-full'>
+      <div className='bg-white w-3/4 rounded-lg shadow m-4 sm:m-4'>
         <Header />
       </div>
       <div className='flex justify-between sm:flex-row flex-col gap-4 w-full h-full'>
-        <div className='bg-white w-full rounded-lg shadow'>
+        <div className='bg-white w-full h-fit rounded-lg shadow'>
           <Create settableRow={settableRow} />
         </div>
         <div className='w-full'>
           <Table setEditModal={setEditModal} setdeleteModal={setdeleteModal} tableRow={tableRow} settableRow={settableRow} />
         </div>
       </div>
-
-
       {editModal ?
         <Edit setEditModal={setEditModal} editModal={editModal} settableRow={settableRow} /> : <></>
       }
-
       {deleteModal ?
-        <Delete setdeleteModal={setdeleteModal} settableRow={settableRow} deleteModal={deleteModal}  /> : <></>}
-
+        <Delete setdeleteModal={setdeleteModal} settableRow={settableRow} deleteModal={deleteModal} /> : <></>}
     </section>
   )
 }

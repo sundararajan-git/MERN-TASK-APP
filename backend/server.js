@@ -20,5 +20,5 @@ mongoose.connect(URI).then(()=>{
 })
 
 
-app.use("/api/tasks",taskRoutes)
+app.use("/",taskRoutes)
 

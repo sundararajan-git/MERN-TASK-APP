@@ -1,39 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DeleteSvg from './DeleteSvg'
+import toast, { Toaster } from 'react-hot-toast'
+import BtnLaoder from './BtnLaoder'
 
 const Delete = (props) => {
-
   const { setdeleteModal, settableRow, deleteModal } = props
-
+  const [btnLoader, setBtnLoader] = useState(false)
   const deleteHandler = async () => {
     try {
-
-      let res = await fetch(`http://localhost:4000/api/tasks/${deleteModal._id}`, {
+      setBtnLoader(true)
+      let res = await fetch(`${import.meta.env.VITE_API_URL}${deleteModal._id}`, {
         method: 'DELETE',
         headers: {
           "Content-Type": 'application/json'
         },
       })
-
-      console.log(res);
-
-      console.log(res, "this is res");
-
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
-
       let data = await res.json();
-
-      console.log(data);
-
       settableRow((prev) => {
         let filterData = prev.filter((i) => i._id !== deleteModal._id)
         return filterData
       })
-
       setdeleteModal(false)
-
+      toast.success("Deleted !")
     } catch (err) {
       console.error(err)
     }
@@ -52,12 +43,15 @@ const Delete = (props) => {
             <DeleteSvg />
             <h3 className="mt-2 mb-5 text-sm font-normal text-gray-800">Are you sure you want to delete this Project?</h3>
             <button data-modal-hide="popup-modal" type="button" className="border border-red-600 text-red-600 font-medium rounded text-sm inline-flex items-center px-3 py-1.5 text-center" onClick={deleteHandler}>
-              I'm sure
+              {btnLoader ? "Deleting.." : "I'm sure"}
+              {btnLoader ?
+                <BtnLaoder /> : <></>}
             </button>
             <button data-modal-hide="popup-modal" type="button" className="py-1.5 px-3 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onClick={() => setdeleteModal(false)}>No</button>
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
 
   )
