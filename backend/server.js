@@ -7,7 +7,7 @@ const taskRoutes = require("./routes/taskRoutes")
 const PORT = process.env.PORT
 const URI = process.env.MONGO_URI
 
-
+// Middleware
 app.use(express.json())
 app.use(cors())
 
@@ -20,7 +20,6 @@ mongoose.connect(URI).then(() => {
 })
 
 app.use("/", taskRoutes)
-
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
